@@ -169,7 +169,7 @@ header{background:var(--white);box-shadow:0 2px 12px rgba(0,0,0,.08);position:st
 .pc-act:hover{background:var(--red);color:#fff;}
 .pc-info{padding:14px;}
 .pc-cat{font-size:10px;color:var(--xmuted);font-weight:600;text-transform:uppercase;letter-spacing:1px;margin-bottom:4px;}
-.pc-name{font-weight:700;font-size:13.5px;line-height:1.35;margin-bottom:6px;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;}
+.pc-name{font-weight:700;font-size:13.5px;line-height:1.35;margin-bottom:6px;display:-webkit-box;-webkit-line-clamp:2;line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;}
 .pc-stars{color:var(--gold);font-size:11px;margin-bottom:6px;}
 .pc-stars small{color:var(--muted);}
 .pc-foot{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-top:4px;}
@@ -1464,29 +1464,29 @@ const PRODUITS = [
   /* ── MAISON & DÉCORATION ── */
   { id:14, name:"Nappe Wax Festive", cat:"maison", price:12000, priceOld:15000,
     desc:"Nappe en tissu wax aux couleurs vives. 140×250 cm (8 personnes). Lavable à 30°C.",
-    img:"images/sacmain.jpg", badge:"promo", reviews:16, stock:20, featured:false, newArr:false, active:false,
+    img:"images/CollJersey.png", badge:"promo", reviews:16, stock:20, featured:false, newArr:false, active:false,
     tags:["nappe","wax","décoration","maison"] },
 
   { id:15, name:"Coussin Déco Kente", cat:"maison", price:8000, priceOld:null,
     desc:"Housse de coussin 45×45 cm en tissu kente multicolore. Fermeture éclair dissimulée. Garnissage non inclus.",
-    img:"images/sacmain.jpg", badge:"new", reviews:8, stock:25, featured:false, newArr:true, active:false,
+    img:"images/Chouchou.png", badge:"new", reviews:8, stock:25, featured:false, newArr:true, active:false,
     tags:["coussin","kente","déco","maison"] },
 
   /* ── ALIMENTATION ── */
   { id:16, name:"Bissap Séché Premium", cat:"alimentation", price:3000, priceOld:null,
     desc:"Fleurs d'hibiscus séchées 100% naturelles. Idéal pour jus de bissap, infusions et cocktails. Sachet 250g.",
-    img:"images/sacmain.jpg", badge:"top", reviews:53, stock:60, featured:false, newArr:false, active:false,
+    img:"images/ParfumHuile.png", badge:"top", reviews:53, stock:60, featured:false, newArr:false, active:false,
     tags:["bissap","hibiscus","jus","naturel","sénégal"] },
 
   { id:17, name:"Thiébou Yapp Épices Mix", cat:"alimentation", price:2000, priceOld:null,
     desc:"Mélange d'épices traditionnel pour thiébou yapp. Recette sénégalaise authentique. Sachet 100g. Sans glutamate.",
-    img:"images/sacmain.jpg", badge:null, reviews:38, stock:100, featured:false, newArr:false, active:false,
+    img:"images/Collpashmina.png", badge:null, reviews:38, stock:100, featured:false, newArr:false, active:false,
     tags:["épices","thiébou","cuisine","sénégalais"] },
 
   /* ── SPORT & LOISIRS ── */
   { id:18, name:"Maillot Lion de la Teranga", cat:"sport", price:15000, priceOld:20000,
     desc:"Maillot de football style équipe nationale du Sénégal. Tissu respirant DryFit. Motif wax. Tailles S à XXL.",
-    img:"images/sacados.jpg", badge:"promo", reviews:41, stock:30, featured:false, newArr:false, active:false,
+    img:"images/collFille.png", badge:"promo", reviews:41, stock:30, featured:false, newArr:false, active:false,
     tags:["maillot","football","sénégal","sport","teranga"] }
 
   /* ────────────────────────────────────────────────────
@@ -1724,7 +1724,7 @@ const obs=new IntersectionObserver(e=>{ e.forEach(x=>{ if(x.isIntersecting){ x.t
 function animCards(){ document.querySelectorAll(".pc,.av-item,.cat-card,.feat,.soc-card,.val-item,.pay-method,.del-step").forEach(el=>{ if(!el.dataset.a){ el.style.opacity="0"; el.style.transform="translateY(20px)"; el.style.transition="opacity .4s ease,transform .4s ease"; el.dataset.a="1"; obs.observe(el); } }); }
 
 /* ── Hero rotation ── */
-const HIMGS=["images/sacmain.jpg","images/montre.jpg","images/bracelet.jpg","images/sacados.jpg"];
+const HIMGS=["images/CollJersey.png","images/ParfumHuile.png","images/Chouchou.png","images/ChaussuresNgaye.png"];
 let hIdx=0;
 
 /* ════════════════════════════════════════════════════════
