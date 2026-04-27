@@ -1,0 +1,30 @@
+CMFG-UniversShop — Site marketplace responsive
+================================================
+
+Contenu de l'archive :
+- index.html        : le site complet (HTML + CSS + JS dans un seul fichier)
+- images/           : dossier vide à remplir avec vos photos produits
+- LISEZ-MOI.txt     : ce fichier
+
+UTILISATION
+-----------
+1. Ouvrez index.html dans n'importe quel navigateur pour tester en local.
+2. Pour publier en ligne, déposez le dossier complet (index.html + images/)
+   chez votre hébergeur (OVH, Netlify, Hostinger, Infomaniak, etc.).
+
+IMAGES PRÉSENTES (dossier images/)
+-----------------------------------
+Les fichiers suivants sont disponibles et utilisés par le site :
+
+  Bonet.png, ChaussuresNgaye.png, ChaussuresNgaye1.png, Chouchou.png,
+  CollChoix.png, CollJersey.png, CollJerseyFriser.png,
+  CollJerseyNonSimple.png, Collpashmina.png, Manche.png,
+  ParfumHuile.png, cagoule.png, collFille.png
+
+Le site utilise uniquement ces images PNG pour afficher les produits,
+les catégories et la section héro. Aucune image manquante.
+
+CONTACT
+-------
+WhatsApp : +221 76 770 33 49
+Email    : cmfg.univershop@gmail.com
