@@ -2,7 +2,7 @@
 <html lang="fr">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <meta name="description" content="CMFG-UniversShop — Marketplace premium à Dakar, Sénégal. Mode, bijoux, beauté, électronique. Commandez par WhatsApp ou email.">
 <title>CMFG-UniversShop | Marketplace Dakar, Sénégal</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -24,8 +24,12 @@
   --fh:'Syne',sans-serif; --fb:'Inter',sans-serif;
 }
 *{margin:0;padding:0;box-sizing:border-box;}
-html{scroll-behavior:smooth;}
-body{font-family:var(--fb);background:var(--bg);color:var(--text);overflow-x:hidden;}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%;text-size-adjust:100%;}
+body{font-family:var(--fb);background:var(--bg);color:var(--text);overflow-x:hidden;min-width:320px;-webkit-tap-highlight-color:rgba(230,57,70,.15);}
+*{box-sizing:border-box;}
+img,video,iframe{max-width:100%;height:auto;}
+/* iOS : éviter le zoom auto sur focus des champs (tous ≥ 16px sur mobile) */
+input,select,textarea{font-size:16px;}
 a{text-decoration:none;color:inherit;}
 button{cursor:pointer;font-family:var(--fb);}
 img{display:block;max-width:100%;}
@@ -215,7 +219,7 @@ header{background:var(--white);box-shadow:0 2px 12px rgba(0,0,0,.08);position:st
 ================================================================ */
 .cart-ov{position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:1000;opacity:0;visibility:hidden;transition:var(--tr);}
 .cart-ov.open{opacity:1;visibility:visible;}
-.cart-pan{position:fixed;top:0;right:-520px;width:460px;max-width:100vw;height:100vh;background:#fff;z-index:1001;display:flex;flex-direction:column;transition:right .38s cubic-bezier(.4,0,.2,1);box-shadow:var(--shlg);}
+.cart-pan{position:fixed;top:0;right:-520px;width:460px;max-width:100vw;height:100vh;height:100dvh;background:#fff;z-index:1001;display:flex;flex-direction:column;transition:right .38s cubic-bezier(.4,0,.2,1);box-shadow:var(--shlg);}
 .cart-pan.open{right:0;}
 .cart-hdr{padding:20px 24px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;background:var(--navy);color:#fff;}
 .cart-hdr h2{font-family:var(--fh);font-size:18px;display:flex;align-items:center;gap:10px;}
@@ -477,12 +481,433 @@ footer{background:var(--navy);color:rgba(255,255,255,.75);}
 .toast i{color:var(--gold);font-size:18px;flex-shrink:0;}
 
 /* ================================================================
-   RESPONSIVE
+   MOBILE MENU BUTTON & BACK-TO-TOP (hidden by default)
 ================================================================ */
-@media(max-width:1100px){.avbox{grid-template-columns:repeat(2,1fr);}.cats-grid{grid-template-columns:repeat(6,1fr);}.ftr-top{grid-template-columns:1fr 1fr;gap:32px;}.stats-band{grid-template-columns:1fr 1fr;}}
-@media(max-width:900px){.hero-grid{grid-template-columns:1fr;}.hero-side{display:none;}.feat-grid{grid-template-columns:1fr 1fr;}.pm{grid-template-columns:1fr;}.pm-img{border-radius:var(--rlg) var(--rlg) 0 0;}.pm-img img{min-height:240px;}.cat-lay{flex-direction:column;}.sbar{width:100%;}.page-grid{grid-template-columns:1fr;}.val-grid{grid-template-columns:1fr 1fr;}.team-grid{grid-template-columns:1fr 1fr;}.del-steps{grid-template-columns:1fr 1fr;}.pay-methods{grid-template-columns:1fr 1fr;}.nl-inner{grid-template-columns:1fr;gap:24px;}}
-@media(max-width:680px){.hdr{flex-wrap:wrap;gap:10px;}.searchbar{order:3;flex:1 0 100%;}.feat-grid{grid-template-columns:1fr;}.cats-grid{grid-template-columns:repeat(4,1fr);}.avbox{grid-template-columns:1fr;}.pgrid{grid-template-columns:repeat(2,1fr);gap:10px;}.hero-cnt{padding:32px 24px;}.tb-l{display:none;}.ftr-top{grid-template-columns:1fr;}.val-grid{grid-template-columns:1fr;}.team-grid{grid-template-columns:1fr;}.del-steps{grid-template-columns:1fr 1fr;}.pay-methods{grid-template-columns:1fr;}.form-row{grid-template-columns:1fr;}.nl-form{flex-direction:column;}.soc-card{width:90px;padding:18px 12px;}}
-@media(max-width:400px){.pgrid{grid-template-columns:1fr;}.cats-grid{grid-template-columns:repeat(2,1fr);}.del-steps{grid-template-columns:1fr;}}
+.menu-btn{display:none;width:40px;height:40px;background:transparent;border:none;color:var(--text);font-size:22px;align-items:center;justify-content:center;border-radius:var(--r);cursor:pointer;transition:var(--tr);}
+.menu-btn:hover{background:var(--bg);color:var(--red);}
+.nav-ov{display:none;position:fixed;inset:0;background:rgba(0,0,0,.55);z-index:1499;animation:fadeIn .25s ease;}
+.nav-ov.show{display:block;}
+.cat-mob-hdr{display:none;}
+@keyframes fadeIn{from{opacity:0;}to{opacity:1;}}
+@keyframes slideInLeft{from{transform:translateX(-100%);}to{transform:translateX(0);}}
+.btt{position:fixed;bottom:28px;right:28px;width:46px;height:46px;background:var(--navy);color:#fff;border:none;border-radius:50%;display:none;align-items:center;justify-content:center;font-size:18px;cursor:pointer;box-shadow:0 4px 16px rgba(0,0,0,.2);z-index:399;transition:var(--tr);}
+.btt:hover{background:var(--red);transform:translateY(-3px);}
+.btt.show{display:flex;}
+
+/* Better focus accessibility */
+button:focus-visible,a:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible{outline:2px solid var(--red);outline-offset:2px;}
+
+/* ================================================================
+   RESPONSIVE — toutes tailles d'écran
+================================================================ */
+
+/* Small desktop / large tablet (≤ 1200px) */
+@media(max-width:1200px){
+  .ftr-top{gap:32px;padding:44px 0 36px;}
+  .hero-cnt{padding:40px 36px;max-width:460px;}
+}
+
+/* Tablet landscape (≤ 1024px) */
+@media(max-width:1024px){
+  .avbox{grid-template-columns:repeat(2,1fr);gap:18px;}
+  .cats-grid{grid-template-columns:repeat(4,1fr);}
+  .ftr-top{grid-template-columns:1fr 1fr;gap:36px;}
+  .stats-band{grid-template-columns:repeat(2,1fr);gap:18px;padding:28px 32px;}
+  .stat-num{font-size:28px;}
+  .hero-cnt{padding:36px 32px;}
+  .hero-main{min-height:320px;}
+  .pgrid{grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:12px;}
+  .nl-text h2{font-size:22px;}
+  .pm{max-width:760px;}
+  .feat-grid{gap:12px;}
+}
+
+/* Tablet portrait (≤ 900px) */
+@media(max-width:900px){
+  .topbar{font-size:11px;}
+  .hero-grid{grid-template-columns:1fr;}
+  .hero-side{flex-direction:row;gap:12px;}
+  .hside{min-height:110px;}
+  .hero-main{min-height:280px;}
+  .hero-cnt{padding:32px 28px;max-width:100%;}
+  .feat-grid{grid-template-columns:1fr 1fr;}
+  .pm{grid-template-columns:1fr;max-height:95vh;max-width:560px;}
+  .pm-img{border-radius:var(--rlg) var(--rlg) 0 0;}
+  .pm-img img{min-height:240px;max-height:300px;}
+  .pm-info{padding:26px 24px;}
+  .cat-lay{flex-direction:column;}
+  .sbar{width:100%;}
+  .sticky-side{position:relative;top:0;}
+  .page-grid{grid-template-columns:1fr;gap:24px;}
+  .val-grid{grid-template-columns:1fr 1fr;}
+  .team-grid{grid-template-columns:repeat(3,1fr);}
+  .del-steps{grid-template-columns:1fr 1fr;}
+  .pay-methods{grid-template-columns:repeat(2,1fr);gap:12px;}
+  .nl-inner{grid-template-columns:1fr;gap:22px;text-align:center;}
+  .nl-form{max-width:480px;margin:0 auto;}
+  .form-row{grid-template-columns:1fr;gap:0;}
+  .content-card{padding:28px 26px;}
+  .ftr-top{padding:40px 0 28px;}
+  .page-hero{padding:48px 0;}
+  .page-hero h1{font-size:30px;}
+  .page-body{padding:36px 0 56px;}
+}
+
+/* Mobile menu kicks in (≤ 768px) */
+@media(max-width:768px){
+  .wrap{padding:0 16px;}
+  .topbar{padding:6px 0;font-size:11px;}
+  .topbar-in{justify-content:center;gap:8px;}
+  .tb-l{display:none;}
+  .tb-r{justify-content:center;width:100%;flex-wrap:wrap;gap:10px;font-size:11px;}
+
+  /* Header layout: menu | logo | cart | wa */
+  .hdr{padding:10px 12px;gap:6px;flex-wrap:wrap;align-items:center;}
+  .menu-btn{display:flex;order:0;flex-shrink:0;min-width:44px;min-height:44px;}
+  .logo{order:1;flex:1;min-width:0;}
+  .logo-box{width:34px;height:34px;font-size:16px;}
+  .logo-name{font-size:14px;line-height:1.05;}
+  .logo-sub{display:none;}
+  .hacts{order:2;margin-left:0;gap:4px;flex-shrink:0;}
+  .hact{padding:8px 10px;min-width:44px;min-height:44px;justify-content:center;}
+  .hact span:not(.bdg){display:none;}
+  .hact i{font-size:18px;}
+  .btn-wa-h{padding:10px 14px;font-size:13px;flex-shrink:0;min-height:44px;}
+  .btn-wa-h .wa-text{display:none;}
+  /* Champs ≥ 16px → empêche le zoom auto iOS */
+  .searchbar{order:3;flex:1 0 100%;margin-top:8px;min-width:0;}
+  .searchbar select{min-width:64px;width:auto;font-size:13px;padding:0 8px;flex-shrink:0;height:44px;}
+  .searchbar input{font-size:16px;padding:11px 12px;min-width:0;min-height:44px;}
+  .searchbar button{padding:0 16px;min-width:48px;min-height:44px;flex-shrink:0;}
+
+  /* Tous les boutons / liens cliquables : zone tactile ≥ 44px */
+  .btn-red,.btn-ghost,.btn-navy,.btn-wa-full,.btn-em-full,.btn-add,.btn-seeall{min-height:44px;}
+  /* Champs des formulaires ≥ 16px */
+  .form-group input,.form-group select,.form-group textarea,
+  .nl-form input,.sbar-box select{font-size:16px;min-height:44px;}
+
+  /* Categories nav becomes a slide-in drawer */
+  .catnav{display:none;}
+  .catnav.mobile-open{display:block;position:fixed;top:0;left:0;width:285px;max-width:85vw;height:100vh;height:100dvh;z-index:1500;overflow-y:auto;animation:slideInLeft .3s ease;box-shadow:var(--shlg);}
+  .catnav.mobile-open .catnav-in{flex-direction:column;align-items:stretch;padding:0;gap:0;overflow:visible;max-width:none;margin:0;}
+  .catnav.mobile-open .cat-mob-hdr{display:flex;align-items:center;justify-content:space-between;padding:18px 22px;border-bottom:1px solid rgba(255,255,255,.08);color:#fff;font-family:var(--fh);font-weight:800;font-size:15px;}
+  .catnav.mobile-open .cat-mob-hdr button{background:rgba(255,255,255,.12);border:none;color:#fff;width:32px;height:32px;border-radius:50%;font-size:15px;cursor:pointer;}
+  .catnav.mobile-open .cni{padding:14px 22px;border-radius:0;border-bottom:1px solid rgba(255,255,255,.05);justify-content:flex-start;font-size:14px;border-left:3px solid transparent;}
+  .catnav.mobile-open .cni:hover,.catnav.mobile-open .cni.act{border-bottom-color:transparent;border-left-color:var(--red);}
+  .catnav.mobile-open .cni.all{margin:0;border-radius:0;}
+
+  /* Hero — décoration masquée sur mobile pour éviter de couper le texte */
+  .hero-sec{padding:14px 0;}
+  .hero-main{min-height:auto;border-radius:10px;}
+  .hero-cnt{padding:26px 20px;max-width:100%;width:100%;}
+  .hero-main h1{font-size:24px;line-height:1.18;word-break:break-word;overflow-wrap:break-word;hyphens:auto;}
+  .hero-main p{font-size:14px;}
+  .hero-decor{display:none;}
+  .hero-decor-ov{display:none;}
+  .hero-side{display:none;}
+
+  /* Avantages */
+  .avbox{grid-template-columns:1fr 1fr;padding:18px 20px;gap:14px;}
+  .av-item{gap:10px;}
+  .av-item i{font-size:24px;}
+  .av-item h5{font-size:12px;}
+  .av-item p{font-size:10.5px;}
+
+  /* Categories grid */
+  .cats-grid{grid-template-columns:repeat(4,1fr);gap:8px;}
+  .cat-card{padding:14px 6px;}
+  .cat-card i{font-size:22px;margin-bottom:6px;}
+  .cat-card span{font-size:10.5px;}
+
+  /* Featured banners */
+  .feat-grid{grid-template-columns:1fr;}
+  .feat{min-height:170px;}
+  .feat-ov h3{font-size:18px;}
+
+  /* Promo bar */
+  .pbar{padding:14px 18px;flex-direction:column;text-align:center;align-items:stretch;gap:14px;}
+  .pbar-txt{justify-content:center;font-size:13px;}
+
+  /* Product grid */
+  .pgrid{grid-template-columns:repeat(2,1fr);gap:10px;}
+  .pc-info{padding:11px 10px;}
+  .pc-cat{font-size:9.5px;}
+  .pc-name{font-size:12.5px;}
+  .pc-stars{font-size:10px;}
+  .pc-price{font-size:15px;}
+  .pc-old{font-size:10.5px;}
+  .pc-foot{flex-direction:column;align-items:flex-start;gap:8px;}
+  .pc-foot > div{width:100%;}
+  .btn-add{padding:7px 11px;font-size:11px;width:100%;justify-content:center;}
+  .pc-acts{opacity:1;transform:none;}
+  .pc-act{width:30px;height:30px;font-size:12px;}
+
+  /* Section heads */
+  .sec-head{flex-wrap:wrap;gap:8px;margin-bottom:14px;}
+  .sec-title{font-size:18px;}
+  .sec-label{font-size:10px;}
+  .btn-seeall{font-size:12px;padding:6px 12px;}
+
+  /* Stats / values / team / del / pay */
+  .val-grid{grid-template-columns:1fr 1fr;}
+  .team-grid{grid-template-columns:1fr 1fr;}
+  .del-steps{grid-template-columns:1fr 1fr;gap:14px;}
+  .pay-methods{grid-template-columns:1fr 1fr;}
+  .stats-band{padding:22px 18px;}
+  .stat-num{font-size:24px;}
+
+  /* Page hero */
+  .page-hero{padding:36px 0;}
+  .page-hero h1{font-size:26px;}
+  .page-hero p{font-size:14px;}
+  .page-body{padding:28px 0 44px;}
+  .content-card{padding:24px 20px;}
+  .content-card h2{font-size:18px;}
+
+  /* Newsletter & social */
+  .nl-form{flex-direction:column;}
+  .soc-grid{gap:10px;}
+  .soc-card{width:90px;padding:16px 10px;}
+
+  /* Footer */
+  .ftr-top{grid-template-columns:1fr;gap:28px;padding:32px 0 22px;}
+  .ftr-bot{flex-direction:column;text-align:center;font-size:11px;gap:10px;}
+  .pay-icons{justify-content:center;flex-wrap:wrap;}
+
+  /* WA float */
+  .wa-float{bottom:18px;left:18px;}
+  .wa-float a{width:50px;height:50px;font-size:23px;}
+  .wa-tip{display:none;}
+  .btt{bottom:18px;right:18px;width:42px;height:42px;font-size:16px;}
+
+  /* Cart drawer full-width */
+  .cart-pan{width:100%;max-width:420px;right:-100%;}
+  .cart-hdr{padding:16px 18px;}
+  .cart-hdr h2{font-size:16px;}
+  .cart-body{padding:12px;}
+  .cart-ftr-wrap{padding:16px 18px;}
+
+  /* Modal full screen mobile */
+  .pm-ov{padding:0;align-items:flex-end;}
+  .pm{max-height:96vh;border-radius:14px 14px 0 0;width:100%;animation:slideUp .35s ease;}
+  .pm-img{border-radius:14px 14px 0 0;}
+  .pm-img img{min-height:200px;max-height:240px;}
+  .pm-info{padding:22px 20px 28px;}
+  .pm-name{font-size:19px;}
+  .pm-price{font-size:24px;}
+  .pm-cls{top:10px;right:10px;}
+
+  /* Toast */
+  .toast{left:14px;right:14px;bottom:78px;max-width:none;font-size:13px;padding:13px 16px;}
+
+  /* FAQ */
+  .faq-q{padding:14px 16px;font-size:13px;}
+  .faq-cats{gap:6px;}
+  .faq-cat-btn{padding:6px 12px;font-size:12px;}
+
+  /* Tables scrollable */
+  .del-table,.sched-table{font-size:12px;}
+  .del-table th,.del-table td{padding:9px 10px;}
+  .content-card .del-table{display:block;overflow-x:auto;}
+}
+@keyframes slideUp{from{transform:translateY(100%);}to{transform:translateY(0);}}
+
+/* Small phones (≤ 480px) */
+@media(max-width:480px){
+  .wrap{padding:0 14px;}
+  .topbar a,.topbar span{font-size:10.5px;}
+  .topbar-in{gap:6px;}
+
+  /* Header — masquer le bouton WhatsApp vert (le flottant suffit) */
+  .hdr{padding:9px 10px;gap:6px;}
+  .logo-name{font-size:13.5px;}
+  .logo-box{width:32px;height:32px;font-size:15px;}
+  .btn-wa-h{display:none;}
+  .menu-btn{width:38px;height:38px;font-size:20px;}
+  .hact{padding:6px 8px;}
+  .hact i{font-size:17px;}
+
+  /* Search — empile selon la largeur (≥16px input pour éviter zoom iOS) */
+  .searchbar select{min-width:60px;font-size:13px;padding:0 6px;height:42px;}
+  .searchbar input{font-size:16px;padding:10px 11px;min-height:42px;}
+  .searchbar button{padding:0 14px;font-size:14px;min-height:42px;}
+
+  /* Hero plus compact */
+  .hero-main{min-height:auto;}
+  .hero-cnt{padding:22px 16px;}
+  .hero-main h1{font-size:21px;}
+  .hero-main p{font-size:13px;margin-bottom:18px;}
+  .hero-cta{flex-direction:column;align-items:stretch;width:100%;}
+  .hero-cta button{justify-content:center;font-size:13px;padding:12px 16px;width:100%;}
+  .hero-badge{font-size:10px;letter-spacing:1.5px;padding:4px 10px;}
+
+  /* Avantages : 2 colonnes serrées */
+  .avbox{padding:14px;gap:10px;}
+  .av-item h5{font-size:11.5px;}
+  .av-item p{font-size:10px;}
+  .av-item i{font-size:22px;}
+
+  /* Catégories */
+  .cats-grid{grid-template-columns:repeat(3,1fr);gap:7px;}
+  .cat-card{padding:12px 4px;}
+  .cat-card i{font-size:20px;margin-bottom:4px;}
+  .cat-card span{font-size:10px;}
+
+  /* Stats / valeurs / equipe */
+  .stats-band{grid-template-columns:1fr 1fr;padding:18px 14px;gap:12px;}
+  .stat-num{font-size:22px;}
+  .stat-lbl{font-size:10.5px;}
+  .team-grid,.del-steps,.pay-methods,.val-grid{grid-template-columns:1fr;}
+  .feat{min-height:140px;}
+  .feat-ov{padding:16px;}
+  .feat-ov h3{font-size:16px;}
+  .feat-ov p{font-size:12px;}
+
+  /* Sections / titres */
+  .sec-title{font-size:17px;}
+  .sec-label{font-size:9.5px;}
+
+  /* Pages internes */
+  .page-hero{padding:32px 0;}
+  .page-hero h1{font-size:22px;}
+  .page-hero p{font-size:12.5px;}
+  .page-body{padding:24px 0 36px;}
+  .content-card{padding:18px 14px;}
+  .content-card h2{font-size:16.5px;padding-bottom:10px;}
+  .content-card p,.content-card li{font-size:13px;line-height:1.55;}
+  .cat-phdr{flex-direction:column;align-items:flex-start;gap:4px;padding:12px 14px;}
+  .cat-phdr h3{font-size:13.5px;}
+  .breadcrumb{font-size:10.5px;flex-wrap:wrap;padding:10px 14px;}
+
+  /* Réseaux sociaux */
+  .soc-grid{justify-content:center;gap:8px;}
+  .soc-card{width:74px;padding:12px 6px;}
+  .soc-name{font-size:10.5px;}
+  .soc-hdl{font-size:9px;}
+  .soc-icon{width:40px;height:40px;font-size:17px;}
+
+  /* Promo & newsletter */
+  .pbar{padding:12px 14px;gap:10px;}
+  .pbar-txt{font-size:12px;}
+  .pbar-code{font-size:12px;letter-spacing:1px;padding:3px 9px;}
+  .nl-sec{padding:32px 0;}
+  .nl-text h2{font-size:19px;}
+  .nl-text p{font-size:12.5px;}
+  .nl-form input,.nl-form button{font-size:13px;padding:11px 14px;}
+  .form-group input,.form-group select,.form-group textarea{font-size:13px;padding:10px 12px;}
+  .form-group label{font-size:12px;}
+
+  /* Modal et panier */
+  .pm-name{font-size:17px;}
+  .pm-price{font-size:21px;}
+  .pm-info{padding:18px 16px 22px;}
+  .pm-desc{font-size:12.5px;}
+  .pm-feats li{font-size:12px;}
+  .cart-item{gap:10px;padding:10px;}
+  .cart-img{width:60px;height:60px;}
+  .cart-name{font-size:13px;}
+  .cart-price{font-size:14px;}
+  .cart-tot-row{font-size:13.5px;}
+  .cart-grand{font-size:17px;}
+
+  /* Pied de page */
+  .ftr-top{padding:26px 0 18px;}
+  .ftr-col h4{font-size:13px;}
+  .ftr-col a,.ftr-col p{font-size:12.5px;}
+  .ftr-bot{font-size:10.5px;}
+
+  /* WA flottant + back-to-top */
+  .wa-float{bottom:14px;left:14px;}
+  .wa-float a{width:48px;height:48px;font-size:22px;}
+  .btt{bottom:14px;right:14px;width:40px;height:40px;font-size:15px;}
+}
+
+/* Very small phones (≤ 360px) — iPhone SE et plus petits */
+@media(max-width:360px){
+  .wrap{padding:0 11px;}
+
+  /* Header ultra-compact */
+  .hdr{padding:8px 9px;gap:5px;}
+  .menu-btn{width:34px;height:34px;font-size:19px;}
+  .logo-box{width:30px;height:30px;font-size:14px;}
+  .logo-name{font-size:13px;}
+  .hact{padding:5px 7px;}
+  .hact i{font-size:16px;}
+  .bdg{font-size:9px;min-width:16px;height:16px;}
+
+  /* Topbar : seulement le téléphone */
+  .topbar-in .tb-r{font-size:10px;}
+
+  /* Search encore plus compacte (input reste à 16px → pas de zoom iOS) */
+  .searchbar select{min-width:54px;font-size:12px;padding:0 5px;}
+  .searchbar input{font-size:16px;padding:9px 10px;}
+  .searchbar input::placeholder{font-size:13px;}
+  .searchbar button{padding:0 12px;font-size:13px;}
+
+  /* Hero ultra-compact */
+  .hero-sec{padding:10px 0;}
+  .hero-main{border-radius:8px;}
+  .hero-cnt{padding:18px 14px;}
+  .hero-main h1{font-size:18px;line-height:1.18;}
+  .hero-main p{font-size:12px;margin-bottom:14px;}
+
+  /* Avantages : 1 colonne */
+  .avbox{grid-template-columns:1fr;}
+
+  /* Catégories : 2 colonnes */
+  .cats-grid{grid-template-columns:repeat(2,1fr);gap:6px;}
+
+  /* Produits : 1 colonne pour photos plus grosses */
+  .pgrid{grid-template-columns:1fr;gap:10px;}
+  .pc-img{aspect-ratio:1.4;}
+  .pc-name{font-size:13px;}
+  .pc-price{font-size:15px;}
+  .pc-info{padding:12px 11px;}
+
+  /* Stats : 1 colonne */
+  .stats-band{grid-template-columns:1fr;gap:14px;}
+
+  /* Boutons */
+  .btn-red,.btn-ghost,.btn-navy{padding:10px 14px;font-size:12px;}
+
+  /* Modal et panier encore plus compacts */
+  .pm-info{padding:16px 14px 20px;}
+  .pm-name{font-size:16px;}
+  .pm-price{font-size:19px;}
+  .cart-hdr{padding:13px 14px;}
+  .cart-hdr h2{font-size:15px;}
+  .cart-body{padding:10px;}
+  .cart-img{width:54px;height:54px;}
+  .cart-ftr-wrap{padding:14px;}
+
+  /* Sections */
+  .sec-title{font-size:16px;}
+  .pbar-txt{font-size:11.5px;flex-wrap:wrap;justify-content:center;}
+
+  /* Drawer menu un peu plus étroit */
+  .catnav.mobile-open{width:265px;}
+
+  /* Pied */
+  .ftr-bot{font-size:10px;}
+}
+
+/* iPhone notch & barre du bas (zone sûre) */
+@supports(padding:max(0px)){
+  .wa-float{bottom:max(14px,env(safe-area-inset-bottom));left:max(14px,env(safe-area-inset-left));}
+  .btt{bottom:max(14px,env(safe-area-inset-bottom));right:max(14px,env(safe-area-inset-right));}
+  .cart-pan{padding-bottom:env(safe-area-inset-bottom);}
+}
+
+/* Landscape phones — keep header compact */
+@media(max-height:500px) and (orientation:landscape){
+  .hero-main{min-height:220px;}
+  .cart-pan{max-width:100%;}
+}
+
+/* Reduced motion */
+@media(prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important;scroll-behavior:auto!important;}
+}
 </style>
 </head>
 <body>
@@ -504,30 +929,34 @@ footer{background:var(--navy);color:rgba(255,255,255,.75);}
 <!-- ═══════════ HEADER ═══════════ -->
 <header>
   <div class="hdr">
+    <button class="menu-btn" id="menu-btn" onclick="toggleMobileNav()" aria-label="Ouvrir le menu"><i class="fas fa-bars"></i></button>
     <div class="logo" onclick="goHome()">
       <div class="logo-box">C</div>
       <div><div class="logo-name">CMFG-<span>UniversShop</span></div><div class="logo-sub">Dakar, Sénégal 🇸🇳</div></div>
     </div>
     <div class="searchbar">
-      <select id="s-cat">
+      <select id="s-cat" aria-label="Catégorie">
         <option value="">Tout</option>
         <option value="mode">Mode</option><option value="bijoux">Bijoux</option>
         <option value="electronique">Électronique</option><option value="beaute">Beauté</option>
         <option value="maison">Maison</option><option value="sport">Sport</option>
         <option value="alimentation">Alimentation</option><option value="autres">Autres</option>
       </select>
-      <input type="text" id="s-input" placeholder="Rechercher un produit, une marque…">
-      <button onclick="doSearch()"><i class="fas fa-search"></i></button>
+      <input type="text" id="s-input" placeholder="Rechercher un produit, une marque…" aria-label="Rechercher">
+      <button onclick="doSearch()" aria-label="Rechercher"><i class="fas fa-search"></i></button>
     </div>
     <div class="hacts">
-      <button class="hact" onclick="openCart()">
+      <button class="hact" onclick="openCart()" aria-label="Panier">
         <i class="fas fa-shopping-cart"></i><span>Panier</span>
         <span class="bdg" id="cart-count">0</span>
       </button>
-      <button class="btn-wa-h" onclick="orderWA()"><i class="fab fa-whatsapp"></i> Commander</button>
+      <button class="btn-wa-h" onclick="orderWA()"><i class="fab fa-whatsapp"></i> <span class="wa-text">Commander</span></button>
     </div>
   </div>
-  <div class="catnav"><div class="catnav-in">
+  <div class="nav-ov" id="nav-ov" onclick="closeMobileNav()"></div>
+  <div class="catnav" id="catnav">
+    <div class="cat-mob-hdr"><span><i class="fas fa-th"></i> Menu</span><button onclick="closeMobileNav()" aria-label="Fermer le menu">✕</button></div>
+    <div class="catnav-in">
     <button class="cni all"  onclick="filterCat('tous')">        <i class="fas fa-th"></i> Toutes catégories</button>
     <button class="cni"      onclick="filterCat('mode')">        <i class="fas fa-tshirt"></i> Mode</button>
     <button class="cni"      onclick="filterCat('bijoux')">      <i class="fas fa-gem"></i> Bijoux</button>
@@ -563,11 +992,11 @@ footer{background:var(--navy);color:rgba(255,255,255,.75);}
         </div>
         <div class="hero-dots"><div class="dot act"></div><div class="dot"></div><div class="dot"></div><div class="dot"></div></div>
       </div>
-      <div class="hero-decor"><img src="images/sacmain.jpg" id="hero-img" alt=""><div class="hero-decor-ov"></div></div>
+      <div class="hero-decor"><img src="images/CollJersey.png" id="hero-img" alt=""><div class="hero-decor-ov"></div></div>
     </div>
     <div class="hero-side">
-      <div class="hside" onclick="filterCat('bijoux')"><img src="images/bracelet.jpg" alt="Bijoux"><div class="hside-body"><h4>Bijoux &amp; Accessoires</h4><p>Artisanat africain authentique</p><span>Voir →</span></div></div>
-      <div class="hside" onclick="filterCat('mode')"><img src="images/sacados.jpg" alt="Mode"><div class="hside-body"><h4>Mode africaine</h4><p>Wax &amp; Prêt-à-porter</p><span>Voir →</span></div></div>
+      <div class="hside" onclick="filterCat('Foulards')"><img src="images/Manche.png" alt="Bijoux"><div class="hside-body"><h4>Mode &amp; Beauté</h4><p>Artisanat africain authentique</p><span>Voir →</span></div></div>
+      <div class="hside" onclick="filterCat('mode')"><img src="images/ParfumHuile.png" alt="Mode"><div class="hside-body"><h4>Huille de Parfum</h4><p>Bio &amp; Beaté</p><span>Voir →</span></div></div>
     </div>
   </div></div>
   <!-- AVANTAGES -->
@@ -668,8 +1097,8 @@ footer{background:var(--navy);color:rgba(255,255,255,.75);}
           <h2><i class="fas fa-users"></i> Notre équipe</h2>
           <div class="team-grid">
             <div class="team-card"><div class="team-av">D</div><h4>Directeur Général</h4><p>Fondateur &amp; vision stratégique</p></div>
-            <div class="team-card"><div class="team-av">A</div><h4>Responsable Produits</h4><p>Sélection &amp; contrôle qualité</p></div>
-            <div class="team-card"><div class="team-av">F</div><h4>Service Client</h4><p>WhatsApp &amp; suivi commandes</p></div>
+            <div class="team-card"><div class="team-av">M</div><h4>Responsable Produits</h4><p>Sélection &amp; contrôle qualité</p></div>
+            <div class="team-card"><div class="team-av">A</div><h4>Service Client</h4><p>WhatsApp &amp; suivi commandes</p></div>
           </div>
         </div>
       </div>
@@ -842,11 +1271,12 @@ footer{background:var(--navy);color:rgba(255,255,255,.75);}
   <h2>Retrouvez-nous partout</h2>
   <p>Suivez-nous sur vos réseaux préférés pour ne rien manquer !</p>
   <div class="soc-grid">
-    <a class="soc-card s-fb" href="https://facebook.com/cmfgunivershop"         target="_blank"><div class="soc-icon"><i class="fab fa-facebook-f"></i></div><div class="soc-name">Facebook</div><div class="soc-hdl">@cmfgunivershop</div></a>
-    <a class="soc-card s-ig" href="https://instagram.com/cmfgunivershop"        target="_blank"><div class="soc-icon"><i class="fab fa-instagram"></i></div><div class="soc-name">Instagram</div><div class="soc-hdl">@cmfgunivershop</div></a>
-    <a class="soc-card s-tt" href="https://tiktok.com/@cmfgunivershop"          target="_blank"><div class="soc-icon"><i class="fab fa-tiktok"></i></div><div class="soc-name">TikTok</div><div class="soc-hdl">@cmfgunivershop</div></a>
-    <a class="soc-card s-li" href="https://linkedin.com/company/cmfgunivershop" target="_blank"><div class="soc-icon"><i class="fab fa-linkedin-in"></i></div><div class="soc-name">LinkedIn</div><div class="soc-hdl">CMFG-UniversShop</div></a>
-    <a class="soc-card s-wa" href="https://wa.me/221767703349"                  target="_blank"><div class="soc-icon"><i class="fab fa-whatsapp"></i></div><div class="soc-name">WhatsApp</div><div class="soc-hdl">Commandez ici</div></a>
+    <a class="soc-card s-fb" href="https://www.facebook.com/cmfgDesign"         target="_blank"><div class="soc-icon"><i class="fab fa-facebook-f"></i></div><div class="soc-name">Facebook</div><div class="soc-hdl">@cmfgunivershop</div></a>
+    <a class="soc-card s-ig" href="https://www.instagram.com/cmfgdesignunivershop?igsh=MXZocWc0YmJsbWlidA%3D%3D&utm_source=qr"        
+    target="_blank"><div class="soc-icon"><i class="fab fa-instagram"></i></div><div class="soc-name">Instagram</div><div class="soc-hdl">@cmfgunivershop</div></a>
+    <a class="soc-card s-tt" href="https://www.tiktok.com/@cheikh_mouhamed_fallou?_r=1&_t=ZS-95sBSVSJXqk"          target="_blank"><div class="soc-icon"><i class="fab fa-tiktok"></i></div><div class="soc-name">TikTok</div><div class="soc-hdl">@cmfgunivershop</div></a>
+    <a class="soc-card s-wa" href="https://chat.whatsapp.com/KCsfnPguj0QEIibjs0Rffw?mode=gi_t"                  
+    target="_blank"><div class="soc-icon"><i class="fab fa-whatsapp"></i></div><div class="soc-name">WhatsApp</div><div class="soc-hdl">Notre groupe whatsApp</div></a>
   </div>
 </div></div>
 
@@ -855,10 +1285,10 @@ footer{background:var(--navy);color:rgba(255,255,255,.75);}
   <div class="ftr-top">
     <div class="fbrand"><span class="fl">CMFG-<span>UniversShop</span></span><p>Votre marketplace premium à Dakar, Sénégal. Des produits soigneusement sélectionnés, livrés rapidement partout en Sénégal.</p>
       <div class="slinks">
-        <a href="https://facebook.com/cmfgunivershop"         target="_blank"><i class="fab fa-facebook-f"></i></a>
-        <a href="https://instagram.com/cmfgunivershop"        target="_blank"><i class="fab fa-instagram"></i></a>
-        <a href="https://tiktok.com/@cmfgunivershop"          target="_blank"><i class="fab fa-tiktok"></i></a>
-        <a href="https://linkedin.com/company/cmfgunivershop" target="_blank"><i class="fab fa-linkedin-in"></i></a>
+        <a href="https://www.facebook.com/cmfgDesign"         target="_blank"><i class="fab fa-facebook-f"></i></a>
+        <a href="https://www.instagram.com/cmfgdesignunivershop?igsh=MXZocWc0YmJsbWlidA%3D%3D&utm_source=qr"        
+        target="_blank"><i class="fab fa-instagram"></i></a>
+        <a href="https://www.tiktok.com/@cheikh_mouhamed_fallou?_r=1&_t=ZS-95sBSVSJXqk"          target="_blank"><i class="fab fa-tiktok"></i></a>
         <a href="https://wa.me/221767703349"                  target="_blank"><i class="fab fa-whatsapp"></i></a>
       </div>
     </div>
@@ -919,6 +1349,9 @@ footer{background:var(--navy);color:rgba(255,255,255,.75);}
   </div>
 </div></div>
 
+<!-- BACK TO TOP -->
+<button class="btt" id="btt" onclick="scrollTop()" aria-label="Retour en haut"><i class="fas fa-arrow-up"></i></button>
+
 <!-- TOAST -->
 <div class="toast" id="toast"><i class="fas fa-check-circle"></i><span id="toast-msg"></span></div>
 
@@ -961,99 +1394,99 @@ const CFG = {
 const PRODUITS = [
 
   /* ── BIJOUX & ACCESSOIRES ── */
-  { id:1, name:"Bracelet Artisanal Wax", cat:"bijoux", price:8500, priceOld:12000,
-    desc:"Bracelet artisanal en tissu wax aux motifs géométriques africains. Fait main par des artisans sénégalais. Disponible en S, M, L. Lavage à la main recommandé.",
-    img:"images/bracelet.jpg", badge:"promo", reviews:42, stock:25, featured:true, newArr:false, active:true,
-    tags:["wax","artisanal","bracelet","dakar"] },
+  { id:1, name:"Foulards muslim🛍️", cat:"mode", price:8500, priceOld:12000,
+    desc:"Foulard en tissu wax africain, idéal pour les femmes musulmanes. Grande taille 180×90 cm, parfait pour le hijab ou comme accessoire de mode. Fait main à Dakar.",
+    img:"images/collFille.png", badge:"promo", reviews:42, stock:25, featured:true, newArr:false, active:true,
+    tags:["coll","foulard","pashima","mode"] },
 
-  { id:2, name:"Collier Perles du Sahel", cat:"bijoux", price:6500, priceOld:9000,
-    desc:"Collier de perles multicolores réalisé selon les techniques traditionnelles du Sahel. Chaque pièce est unique. Longueur : 45 cm.",
-    img:"images/bracelet.jpg", badge:"promo", reviews:27, stock:40, featured:false, newArr:false, active:true,
-    tags:["collier","perles","sahel","bijoux"] },
+  { id:2, name:"Foulards pashmina🛍️", cat:"mode", price:6500, priceOld:9000,
+    desc:"Foulards pashmina en tissu wax africain, doux et légers. Taille 180×90 cm, parfaits pour le cou ou comme accessoire de mode. Fait main à Dakar.",
+    img:"images/Collpashmina.png", badge:"promo", reviews:27, stock:40, featured:false, newArr:false, active:true,
+    tags:["coll","foulard","pashima","mode"] },
 
-  { id:3, name:"Montre Ethnique Premium", cat:"bijoux", price:35000, priceOld:45000,
-    desc:"Montre à quartz avec cadran gravé de motifs africains. Bracelet en cuir tanné naturel. Étanche 3 ATM. Pile garantie 2 ans.",
-    img:"images/montre.jpg", badge:"promo", reviews:31, stock:8, featured:true, newArr:false, active:true,
-    tags:["montre","ethnique","cuir","premium"] },
+  { id:3, name:"Coll jersey avec casquette🧢🛍️", cat:"mode", price:35000, priceOld:45000,
+    desc:"Ensemble collier et casquette en tissu jersey imprimé africain. Collier ras du cou avec pendentif assorti à la casquette snapback. Style urbain et tendance.",
+    img:"images/CollJersey.png", badge:"promo", reviews:31, stock:8, featured:true, newArr:false, active:true,
+    tags:["coll","casque","jersy","mode"] },
 
-  { id:4, name:"Montre Bois & Cuir Nature", cat:"bijoux", price:28000, priceOld:null,
-    desc:"Montre écologique en bois d'acajou africain. Mécanisme japonais de précision. Bracelet en cuir végétal tanné. Étanche 3 ATM.",
-    img:"images/69b536686e33amontre.jpg", badge:"new", reviews:14, stock:5, featured:false, newArr:true, active:true,
-    tags:["montre","bois","nature","eco"] },
+  { id:4, name:"Manche🛍️", cat:"mode", price:2000, priceOld:null,
+    desc:"Manche en tissu wax africain, accessoire polyvalent pour bras ou jambe. Taille unique, élastique et confortable. Parfait pour ajouter une touche de style à n'importe quelle tenue.",
+    img:"images/Manche.png", badge:"new", reviews:14, stock:5, featured:true, newArr:true, active:true,
+    tags:["manche","mode","coll","beaute"] },
 
-  { id:5, name:"Bague Touareg Argent Massif", cat:"bijoux", price:11500, priceOld:null,
-    desc:"Bague en argent 925 massif ciselée à la main par des artisans touaregs. Motifs géométriques traditionnels. Du 48 au 64.",
-    img:"images/bracelet.jpg", badge:null, reviews:11, stock:18, featured:false, newArr:false, active:true,
+  { id:5, name:"Bonet", cat:"mode", price:500, priceOld:null,
+    desc:"Bonet en tissu wax africain, accessoire de mode polyvalent. Taille unique, élastique et confortable. Parfait pour ajouter une touche de style à n'importe quelle tenue.",
+    img:"images/Bonet.png", badge:"new", reviews:11, stock:18, featured:false, newArr:true, active:true,
     tags:["bague","argent","touareg","massif"] },
 
-  { id:6, name:"Set Bijoux Wax Complet", cat:"bijoux", price:18000, priceOld:25000,
-    desc:"Coffret : 1 collier + 2 bracelets + 1 paire de boucles d'oreilles assortis en tissu wax. Idéal en cadeau.",
-    img:"images/bracelet.jpg", badge:"top", reviews:58, stock:10, featured:true, newArr:false, active:true,
-    tags:["set","coffret","wax","cadeau"] },
+  { id:6, name:"Coll jersey non simple🛍️", cat:"mode", price:18000, priceOld:25000,
+    desc:"Collier en tissu jersey imprimé africain, design original avec motifs géométriques. Ras du cou ajustable, parfait pour un look urbain et moderne.",
+    img:"images/CollJerseyNonSimple.png", badge:"top", reviews:58, stock:10, featured:false, newArr:false, active:true,
+    tags:["mode","coll","foulard","jersiy"] },
 
   /* ── MODE & MAROQUINERIE ── */
-  { id:7, name:"Sac Main Wax Élégance", cat:"mode", price:25000, priceOld:null,
-    desc:"Sac à main en cuir synthétique et tissu wax africain. Coutures renforcées, intérieur doublé avec poche zippée. Bandoulière amovible.",
-    img:"images/sacmain.jpg", badge:"new", reviews:18, stock:12, featured:true, newArr:true, active:true,
-    tags:["sac","wax","cuir","mode"] },
+  { id:7, name:"Cagoule 🛍️", cat:"mode", price:5000, priceOld:null,
+    desc:"Cagoule en tissu wax africain, accessoire de mode polyvalent pour la tête et le cou. Taille unique, élastique et confortable. Parfait pour ajouter une touche de style à n'importe quelle tenue.",
+    img:"images/cagoule.png", badge:"new", reviews:18, stock:12, featured:true, newArr:true, active:true,
+    tags:["cagoule","foulard","mode","beaute"] },
 
-  { id:8, name:"Sac à Dos Urban Africa", cat:"mode", price:18500, priceOld:null,
-    desc:"Sac à dos en tissu kente et toile imperméable. Compartiment laptop 15\", 3 poches. Contenance 25L.",
-    img:"images/sacados.jpg", badge:"new", reviews:9, stock:20, featured:false, newArr:true, active:true,
-    tags:["sac","dos","kente","laptop"] },
+  { id:8, name:"Coll choix🛍️", cat:"mode", price:18500, priceOld:null,
+    desc:"Collier en tissu wax africain, design original avec motifs géométriques. Ras du cou ajustable, parfait pour un look urbain et moderne.",
+    img:"images/CollChoix.png", badge:"new", reviews:9, stock:20, featured:false, newArr:true, active:true,
+    tags:["mode","foulard","coll","vetement"] },
 
-  { id:9, name:"Pochette Soirée Kente", cat:"mode", price:14000, priceOld:18000,
-    desc:"Pochette de soirée en tissu kente doré et argenté. Fermeture magnétique. Chaîne dorée amovible. 22×14 cm.",
-    img:"images/sacmain.jpg", badge:"promo", reviews:22, stock:15, featured:true, newArr:false, active:true,
-    tags:["pochette","kente","soirée","cérémonie"] },
+  { id:9, name:"Coll jersey friser🛍️", cat:"mode", price:14000, priceOld:18000,
+    desc:"Collier en tissu jersey frisé, design original avec motifs géométriques. Ras du cou ajustable, parfait pour un look urbain et moderne.",
+    img:"images/CollJerseyFriser.png", badge:"promo", reviews:22, stock:15, featured:true, newArr:false, active:true,
+    tags:["coll","jersey","friser","mode"] },
 
-  { id:10, name:"Grand Sac Marché Wax", cat:"mode", price:9500, priceOld:null,
-    desc:"Grand cabas en tissu wax résistant. Double anse en coton tressé. Capacité XXL. Fait main à Dakar.",
-    img:"images/sacados.jpg", badge:null, reviews:35, stock:30, featured:false, newArr:false, active:true,
-    tags:["sac","marché","wax","cabas"] },
+  { id:10, name:"Chouchou 🛍️", cat:"mode", price:9500, priceOld:null,
+    desc:"Chouchou en tissu wax africain, accessoire de mode polyvalent pour les cheveux. Taille unique, élastique et confortable. Parfait pour ajouter une touche de style à n'importe quelle coiffure.",
+    img:"images/Chouchou.png", badge:null, reviews:35, stock:30, featured:false, newArr:false, active:true,
+    tags:["chouchou","wax","cheveux","mode"] },
 
   /* ── BEAUTÉ & SOINS ── */
-  { id:11, name:"Huile de Karité Pure", cat:"beaute", price:4500, priceOld:null,
-    desc:"Beurre de karité 100% naturel et non raffiné, récolté au Sénégal. Idéal pour peau, cheveux et lèvres. Pot 200g. Sans additifs.",
-    img:"images/sacmain.jpg", badge:"top", reviews:64, stock:50, featured:true, newArr:false, active:true,
-    tags:["karité","naturel","soin","peau","cheveux","bio"] },
+  { id:11, name:"Parfum huile🛍️", cat:"beaute", price:1000, priceOld:1.500,
+    desc:"Parfum huile en flacon roll-on 10ml, formule légère et non grasse. Parfum inspiré des senteurs africaines, parfait pour une touche de fraîcheur toute la journée.",
+    img:"images/ParfumHuile.png", badge:"top", reviews:64, stock:50, featured:true, newArr:false, active:true,
+    tags:["huille","naturel","soin","peau","parfum","bio"] },
 
-  { id:12, name:"Savon au Lait de Baobab", cat:"beaute", price:2500, priceOld:null,
-    desc:"Savon artisanal enrichi en lait de baobab et huile de coco. Hydrate et illumine le teint. 100g. Vegan.",
-    img:"images/sacmain.jpg", badge:"new", reviews:29, stock:80, featured:false, newArr:true, active:true,
-    tags:["savon","baobab","coco","naturel","vegan"] },
+  { id:12, name:"Chaussures 👞 ngaye🛍️", cat:"mode", price:2500, priceOld:null,
+    desc:"Chaussures traditionnelles sénégalaises en cuir, fabriquées à la main par des artisans locaux. Confortables et durables, parfaites pour un style authentique et élégant.",
+    img:"images/ChaussuresNgaye.png", badge:"new", reviews:29, stock:80, featured:false, newArr:true, active:true,
+    tags:["chaussire","mode","ngay","naturel","senegal"] },
 
-  { id:13, name:"Huile de Coco Vierge", cat:"beaute", price:5500, priceOld:7000,
-    desc:"Huile de coco vierge pressée à froid. Multiusage : démaquillant, hydratant, soin cheveux, massage. Flacon 250ml.",
-    img:"images/sacmain.jpg", badge:"promo", reviews:47, stock:35, featured:false, newArr:false, active:true,
-    tags:["coco","huile","vierge","naturel","cheveux"] },
+  { id:13, name:"Chaussures 👞 ngaye🛍️", cat:"mode", price:5500, priceOld:7000,
+    desc:"Chaussures traditionnelles sénégalaises en cuir, fabriquées à la main par des artisans locaux. Confortables et durables, parfaites pour un style authentique et élégant.",
+    img:"images/ChaussuresNgaye1.png", badge:"promo", reviews:47, stock:35, featured:false, newArr:false, active:true,
+    tags:["chaussire","mode","ngay","naturel","senegal"] },
 
   /* ── MAISON & DÉCORATION ── */
   { id:14, name:"Nappe Wax Festive", cat:"maison", price:12000, priceOld:15000,
     desc:"Nappe en tissu wax aux couleurs vives. 140×250 cm (8 personnes). Lavable à 30°C.",
-    img:"images/sacmain.jpg", badge:"promo", reviews:16, stock:20, featured:false, newArr:false, active:true,
+    img:"images/sacmain.jpg", badge:"promo", reviews:16, stock:20, featured:false, newArr:false, active:false,
     tags:["nappe","wax","décoration","maison"] },
 
   { id:15, name:"Coussin Déco Kente", cat:"maison", price:8000, priceOld:null,
     desc:"Housse de coussin 45×45 cm en tissu kente multicolore. Fermeture éclair dissimulée. Garnissage non inclus.",
-    img:"images/sacmain.jpg", badge:"new", reviews:8, stock:25, featured:false, newArr:true, active:true,
+    img:"images/sacmain.jpg", badge:"new", reviews:8, stock:25, featured:false, newArr:true, active:false,
     tags:["coussin","kente","déco","maison"] },
 
   /* ── ALIMENTATION ── */
   { id:16, name:"Bissap Séché Premium", cat:"alimentation", price:3000, priceOld:null,
     desc:"Fleurs d'hibiscus séchées 100% naturelles. Idéal pour jus de bissap, infusions et cocktails. Sachet 250g.",
-    img:"images/sacmain.jpg", badge:"top", reviews:53, stock:60, featured:false, newArr:false, active:true,
+    img:"images/sacmain.jpg", badge:"top", reviews:53, stock:60, featured:false, newArr:false, active:false,
     tags:["bissap","hibiscus","jus","naturel","sénégal"] },
 
   { id:17, name:"Thiébou Yapp Épices Mix", cat:"alimentation", price:2000, priceOld:null,
     desc:"Mélange d'épices traditionnel pour thiébou yapp. Recette sénégalaise authentique. Sachet 100g. Sans glutamate.",
-    img:"images/sacmain.jpg", badge:null, reviews:38, stock:100, featured:false, newArr:false, active:true,
+    img:"images/sacmain.jpg", badge:null, reviews:38, stock:100, featured:false, newArr:false, active:false,
     tags:["épices","thiébou","cuisine","sénégalais"] },
 
   /* ── SPORT & LOISIRS ── */
   { id:18, name:"Maillot Lion de la Teranga", cat:"sport", price:15000, priceOld:20000,
     desc:"Maillot de football style équipe nationale du Sénégal. Tissu respirant DryFit. Motif wax. Tailles S à XXL.",
-    img:"images/sacados.jpg", badge:"promo", reviews:41, stock:30, featured:false, newArr:false, active:true,
+    img:"images/sacados.jpg", badge:"promo", reviews:41, stock:30, featured:false, newArr:false, active:false,
     tags:["maillot","football","sénégal","sport","teranga"] }
 
   /* ────────────────────────────────────────────────────
@@ -1079,10 +1512,26 @@ const PAGES = ["pg-home","pg-cat","pg-about","pg-contact","pg-faq","pg-livraison
 
 let cart=[], curCat="tous", curQ="", curP=null, mQty=1;
 const $ = id => document.getElementById(id);
+const CART_KEY = "cmfg_cart_v1";
+
+/* ── Mobile nav drawer ── */
+function toggleMobileNav(){
+  const nav=$("catnav"), ov=$("nav-ov");
+  if(!nav) return;
+  if(nav.classList.contains("mobile-open")) closeMobileNav();
+  else { nav.classList.add("mobile-open"); ov.classList.add("show"); document.body.style.overflow="hidden"; }
+}
+function closeMobileNav(){
+  const nav=$("catnav"), ov=$("nav-ov");
+  if(nav) nav.classList.remove("mobile-open");
+  if(ov)  ov.classList.remove("show");
+  document.body.style.overflow="";
+}
 
 /* ── Navigation ── */
 function showPg(id){
   PAGES.forEach(p=>{ const e=$(p); if(e) e.style.display = p===id?"block":"none"; });
+  closeMobileNav();
   window.scrollTo({top:0,behavior:"smooth"});
 }
 function goHome()     { showPg("pg-home"); renderHome(); }
@@ -1095,6 +1544,9 @@ function filterCat(cat){
   const inp=$("s-input"); if(inp) inp.value="";
   showPg("pg-cat"); renderCat();
 }
+
+/* ── Back to top ── */
+function scrollTop(){ window.scrollTo({top:0,behavior:"smooth"}); }
 function doSearch(){
   const q=($("s-input")?.value||"").trim();
   const c=$("s-cat")?.value||"";
@@ -1211,6 +1663,14 @@ function chQty(id,d){
 function updCart(){
   const n=cart.reduce((s,i)=>s+i.qty,0);
   const e=$("cart-count"); if(e) e.textContent=n;
+  /* Persist to localStorage so panier survives page reloads */
+  try{ localStorage.setItem(CART_KEY, JSON.stringify(cart)); }catch(e){}
+}
+function loadCart(){
+  try{
+    const raw=localStorage.getItem(CART_KEY);
+    if(raw){ const arr=JSON.parse(raw); if(Array.isArray(arr)) cart=arr; }
+  }catch(e){ cart=[]; }
 }
 function openCart(){ renderCart(); $("cart-ov")?.classList.add("open"); $("cart-pan")?.classList.add("open"); document.body.style.overflow="hidden"; }
 function closeCart(){ $("cart-ov")?.classList.remove("open"); $("cart-pan")?.classList.remove("open"); document.body.style.overflow=""; }
@@ -1271,20 +1731,23 @@ let hIdx=0;
    🚀  INITIALISATION — tout démarre ici
 ════════════════════════════════════════════════════════ */
 document.addEventListener("DOMContentLoaded", function() {
-  /* 1. Afficher uniquement l'accueil */
+  /* 1. Charger le panier sauvegardé (localStorage) */
+  loadCart();
+
+  /* 2. Afficher uniquement l'accueil */
   PAGES.forEach(p=>{ const e=$(p); if(e) e.style.display=p==="pg-home"?"block":"none"; });
 
-  /* 2. Remplir les grilles */
+  /* 3. Remplir les grilles */
   renderHome();
 
-  /* 3. Compteur panier */
+  /* 4. Compteur panier */
   updCart();
 
-  /* 4. Recherche clavier */
+  /* 5. Recherche clavier */
   const inp=$("s-input");
   if(inp) inp.addEventListener("keydown", e=>{ if(e.key==="Enter") doSearch(); });
 
-  /* 5. Hero slideshow */
+  /* 6. Hero slideshow */
   const hImg=$("hero-img");
   if(hImg){
     hImg.style.transition="opacity .4s ease";
@@ -1296,8 +1759,36 @@ document.addEventListener("DOMContentLoaded", function() {
     },4500);
   }
 
-  /* 6. Animations initiales */
+  /* 7. Animations initiales */
   setTimeout(animCards,200);
+
+  /* 8. Touche Échap : ferme modal, panier, menu mobile */
+  document.addEventListener("keydown", e=>{
+    if(e.key==="Escape"){
+      const pmOv=$("pm-ov");
+      if(pmOv && pmOv.classList.contains("open")) { closeModal(); return; }
+      const ctOv=$("cart-ov");
+      if(ctOv && ctOv.classList.contains("open")) { closeCart(); return; }
+      const navEl=$("catnav");
+      if(navEl && navEl.classList.contains("mobile-open")) { closeMobileNav(); return; }
+    }
+  });
+
+  /* 9. Bouton "retour en haut" : visible après 400px de scroll */
+  const btt=$("btt");
+  if(btt){
+    const onScroll=()=>{ btt.classList.toggle("show", window.scrollY>400); };
+    window.addEventListener("scroll", onScroll, {passive:true});
+    onScroll();
+  }
+
+  /* 10. Ferme le menu mobile en cas de redimensionnement vers desktop */
+  let lastW=window.innerWidth;
+  window.addEventListener("resize", ()=>{
+    const w=window.innerWidth;
+    if(w>768 && lastW<=768){ closeMobileNav(); }
+    lastW=w;
+  });
 });
 </script>
 </body>
